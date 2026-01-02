@@ -7,13 +7,21 @@ var yourAceCount = 0;
 var hidden;
 var deck = [];
 
+var totalMoney = 500;
+
 
 var canHit = true;
+var bet = 10;
 
 window.onload = function() {
-    buildDeck();
-    shuffleDeck();
-    startGame();
+    updateBalance();
+    if (totalMoney > 0) {
+        buildDeck();
+        shuffleDeck();
+        startGame();
+    } else {
+        disableGame();
+    }
     
     document.getElementById("hit").addEventListener("click", hit);
     document.getElementById("stay").addEventListener("click", stay);
@@ -41,6 +49,15 @@ function shuffleDeck() {
 }
 
 function startGame() {
+    if (totalMoney <= 0) {
+        disableGame();
+        return;
+    }
+    
+    document.getElementById("hit").disabled = false;
+    document.getElementById("stay").disabled = false;
+    document.getElementById("results").style.color = "#1a5f4a";
+    
     hidden = deck.pop();
     dealerSum += getValue(hidden);
     dealerAceCount += checkAce(hidden);
@@ -95,19 +112,25 @@ function stay(){
     let message = "";
     if (yourSum > 21) {
         message = "You Lose!";
+        totalMoney -= bet;
     } else if (dealerSum > 21) {
-        message = "You Win!"
+        message = "You Win!";
+        totalMoney += bet;
     } else if (yourSum == dealerSum) {
-        message = "Tie Game"
+        message = "Tie Game";
+        totalMoney += 0;
     } else if (yourSum > dealerSum) {
-        message = "You win!"
+        message = "You win!";
+        totalMoney += bet;
     } else if (yourSum < dealerSum) {
-        message = "You lose!"
+        message = "You lose!";
+        totalMoney -= bet;
     }
 
     document.getElementById("dealer-sum").innerText = dealerSum;
     document.getElementById("your-sum").innerText = yourSum;
     document.getElementById("results").innerText = message;
+    updateBalance();
     
     setTimeout(resetGame, 2000);
 }
@@ -126,6 +149,8 @@ function hit(){
     if (reduceAce(yourSum, yourAceCount) > 21) {
         canHit = false;
         document.getElementById("results").innerText = "You Lost!";
+        totalMoney -= bet;
+        updateBalance();
         setTimeout(resetGame, 2000);
     }
 }
@@ -146,6 +171,11 @@ function checkAce(card) {
 }
 
 function resetGame() {
+    if (totalMoney <= 0) {
+        disableGame();
+        return;
+    }
+    
     dealerSum = 0;
     yourSum = 0;
     dealerAceCount = 0;
@@ -162,4 +192,18 @@ function resetGame() {
     buildDeck();
     shuffleDeck();
     startGame();
+}
+
+function updateBalance() {
+    document.getElementById("total-money").innerText = totalMoney;
+    if (totalMoney <= 0) {
+        disableGame();
+    }
+}
+
+function disableGame() {
+    document.getElementById("hit").disabled = true;
+    document.getElementById("stay").disabled = true;
+    document.getElementById("results").innerText = "Game Over! You're out of money!";
+    document.getElementById("results").style.color = "#dc3545";
 }

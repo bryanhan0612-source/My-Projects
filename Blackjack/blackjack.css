@@ -86,6 +86,30 @@ h2 span {
     transform: translateY(-2px);
 }
 
+#balance-display {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a5f4a;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #f0f0f0;
+    border-radius: 8px;
+}
+
+#balance-display span {
+    color: #28a745;
+}
+
+#hit:disabled, #stay:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#hit:disabled:hover, #stay:disabled:hover {
+    transform: none;
+}
+
 #results {
     font-size: 24px;
     font-weight: 600;
