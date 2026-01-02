@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoreboard</title>
+    <link rel="stylesheet" href="index.css">
+
+</head>
+<body>
+    <header class="top-header">
+        <div class="title-container">
+            <h1 id="title">Basketball Scoreboard</h1>
+        </div>
+    </header>
+    <div class="container">
+        <div class="team">
+            <h2 class="team-title">HOME</h2>
+            <div class="box">
+                <p class="score" id="home_score">0</p>
+            </div>
+            <div class="buttons">
+                <button onclick="homeAddOne()">+1</button>
+                <button onclick="homeAddTwo()">+2</button>
+                <button onclick="homeAddThree()">+3</button>
+            </div>
+        </div>
+    
+        <div class="team">
+            <h2 class="team-title">AWAY</h2>
+            <div class="box">
+                <p class="score" id="away_score">0</p>
+            </div>
+            <div class="buttons">
+                <button onclick="awayAddOne()">+1</button>
+                <button onclick="awayAddTwo()">+2</button>
+                <button onclick="awayAddThree()">+3</button>
+            </div>
+        </div>
+    </div> 
+    
+    <div class="reset-container">
+        <button class="reset_button" onclick="resetScores()">RESET</button>
+    </div>
+    
+    <script src="project.js"></script>
+    
+
+</body>
+</html>
